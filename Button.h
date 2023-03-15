@@ -14,7 +14,7 @@ private:
     sf::Sprite normal;
     sf::Sprite clicked;
     sf::Sprite* currentSpr;
-    bool current=false;
+    bool current=false; // Переключение кнопок
     void setState(bool);
     
 };

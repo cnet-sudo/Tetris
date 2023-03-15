@@ -9,41 +9,49 @@ void GameEngine::input()
 		// Обработка события нажатия на клавишу Esc
 		if  (event.type == sf::Event::Closed) 	window->close(); 
 		
+		if (event.type == sf::Event::MouseWheelMoved) 
+		{
+			if ((event.mouseWheel.delta == -1) || (event.mouseWheel.delta == 1))
+			{
+				tetramino.Speed();
+			}
+		}
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
 			if (pause.checkClick(sf::Mouse::getPosition(*window),true))
 				{
-					
+				mypause = !mypause;
 				}
 			if (sound.checkClick(sf::Mouse::getPosition(*window),true))
 			{
 
 			}
-			if (play.checkClick(sf::Mouse::getPosition(*window),true))
-			{
-
-			}
 			if (restart.checkClick(sf::Mouse::getPosition(*window),true))
 			{
-
+				tetramino.Restart();
 			}
 			
-			if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 403 )
+			if (exit.checkClick(sf::Mouse::getPosition(*window), true))
 			{
-				tetramino.TetDirection(Tetramino::direction::left);
-				std::cout << sf::Mouse::getPosition(*window).x << "\n";
+				myexit = true;
 			}
 			
-			if (sf::Mouse::getPosition(*window).x >= 403 && sf::Mouse::getPosition(*window).x < 609)
+			if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x) &&(sf::Mouse::getPosition(*window).x>208) && (sf::Mouse::getPosition(*window).x < 609))
+			{
+				tetramino.TetDirection(Tetramino::direction::left);		
+			}
+			
+			if (sf::Mouse::getPosition(*window).x >= tetramino.getPositio().x && sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
 			{
 			tetramino.TetDirection(Tetramino::direction::Right);
-			std::cout << sf::Mouse::getPosition(*window).x << "\n";
+			
 			}
 			
 			}
 		
+
 			if (event.mouseButton.button == sf::Mouse::Right)
 			{
 				if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
@@ -59,16 +67,8 @@ void GameEngine::input()
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{				
-				if (play.checkClick(sf::Mouse::getPosition(*window),false))
-				{
-
-				}
-
-				if (restart.checkClick(sf::Mouse::getPosition(*window),false))
-				{
-
-				}
-
+				restart.checkClick(sf::Mouse::getPosition(*window), false);
+				exit.checkClick(sf::Mouse::getPosition(*window), false);
 			}
 			
 		}
@@ -79,7 +79,15 @@ void GameEngine::input()
 void GameEngine::update(sf::Time const& deltaTime)
 {
 	
-	tetramino.update(deltaTime);
+	if (!mypause) tetramino.update(deltaTime);
+	
+	if (myexit) {
+	tm += deltaTime;
+	if (tm > sf::seconds(1))
+	{
+		if (myexit) window->close();
+	}
+	}
 }
 
 void GameEngine::draw()
@@ -89,14 +97,14 @@ void GameEngine::draw()
 	// Отрисовка фона в графическом окне
 	tetramino.draw();
 	window->draw(background);
-	window->draw(*play.getSprite());
 	window->draw(*pause.getSprite());
 	window->draw(*restart.getSprite());
 	window->draw(*sound.getSprite());
+	window->draw(*exit.getSprite());
 	text.setPosition(15, 515);
 	text.setString(" < Score > ");
 	window->draw(text);
-    text.setString(std::to_string(score));
+    text.setString(std::to_string(tetramino.getScore()));
 	text.setPosition(100-text.getGlobalBounds().width/2, 555);
 	window->draw(text);
 	// Вывод объектов в графическом окне
@@ -107,9 +115,7 @@ GameEngine::GameEngine()
 {
 	// Получение ссылки на текстуру для прямоугольника 
 	background.setTexture(&AssetManager::GetTexture("image/Tetris.png"));
-	
-	
-	if (!icon.loadFromFile("image/game.png")) exit(3); 
+	if (!icon.loadFromFile("image/game.png")) window->close();
 	window->setIcon(256, 256, icon.getPixelsPtr());
 	text.setFont(AssetManager::GetFont("Godzilla.ttf"));
 	text.setFillColor(sf::Color::Black);

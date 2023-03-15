@@ -31,9 +31,15 @@ public:
 	void update(sf::Time const& deltaTime);
 	// вращение тетрамино
 	void Rotate();
+	sf::Vector2f getPositio();
+	void Speed();
+	void Restart();
+	int getScore();
 private:
+	static const int Y = 31; // высота игрового поля
+	static const int X = 20; // ширина игрового поля
 	// игровое поле
-	std::array<std::array<int, 30>, 18> field{0};
+	std::array<std::array<sf::Color, Y>, X> field;
 	// массив фигурок тетрамино
 	std::array<std::array<int, 4>, 7> figures{ {{1,3,5,7},{2,4,5,7},{3,4,5,6},{3,4,5,7},{2,3,5,7},{3,5,6,7},{2,3,4,5}} };
 	// положение тетрамино
@@ -56,12 +62,14 @@ private:
 	const sf::Vector2f tet;     // начальные координаты тетрамино
 	
 	float click_dx;            // шаг перемещения тетрамино по x 
-	const float click_dy=0.1f; // шаг перемещения тетрамино по y
+	const float click_dy=1.0f; // шаг перемещения тетрамино по y
 	sf::Time frameRate;  // интервал обновления игровой логики
 	Borders bordes;      // границы перемещения тетрамино
-	int N;			     // тип тетрамино
+	sf::Vector2i TN;	 // тип тетрамино
 	void newFigrois();	 // новый тетрамино
+	void LineDead(int g);	 // уничтожение полоски
 	bool check(ch ch);	 // проверка положения тетрамино
-	
+	sf::Int32 Delay = 200;
+	int Score;
 };
 

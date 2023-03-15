@@ -17,13 +17,13 @@ bool Button::checkClick(sf::Vector2i mousePos,bool position) {
     
         && (static_cast<float>(mousePos.y) > currentSpr->getPosition().y && static_cast<float>(mousePos.y) < (currentSpr->getPosition().y + currentSpr->getGlobalBounds().height)) )
         {
-            setState(!current);
+        setState(!current); return true;
         }
     
     }
-    else if (current) setState(!current);
+    else if (current) { setState(!current); return true; } 
 
-    return current;
+    return false;
 }
 
 
