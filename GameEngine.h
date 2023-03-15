@@ -25,7 +25,7 @@ private:
 	Button restart = Button(sf::Vector2f(13, 300), AssetManager::GetTexture("image/restart1.png"), AssetManager::GetTexture("image/restart2.png"));
 	Button sound = Button(sf::Vector2f(13, 380), AssetManager::GetTexture("image/nosound.png"), AssetManager::GetTexture("image/sound.png"));
 	sf::Text text;
-	Tetramino tetramino = Tetramino(*window,390,10);
+	Tetramino tetramino = Tetramino(*window,sf::Vector2f(390,-30),Tetramino::Borders(198,609,585));
 	int score = 0;
 	// Метод обработки событий 
 	void input();

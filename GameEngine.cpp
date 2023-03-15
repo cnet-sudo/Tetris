@@ -30,25 +30,31 @@ void GameEngine::input()
 
 			}
 			
-			if (sf::Mouse::getPosition(*window).x > 198 && sf::Mouse::getPosition(*window).x < 609 )
+			if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 403 )
 			{
-				
-				
-				if (tetramino.getPosition().x < sf::Mouse::getPosition(*window).x)
-				{
-					tetramino.Tetdirection(Tetramino::direction::Right);
-				}
-				if (tetramino.getPosition().x > sf::Mouse::getPosition(*window).x) 
-				{
-					tetramino.Tetdirection(Tetramino::direction::left);
-				}
-					
+				tetramino.TetDirection(Tetramino::direction::left);
+				std::cout << sf::Mouse::getPosition(*window).x << "\n";
 			}
 			
+			if (sf::Mouse::getPosition(*window).x >= 403 && sf::Mouse::getPosition(*window).x < 609)
+			{
+			tetramino.TetDirection(Tetramino::direction::Right);
+			std::cout << sf::Mouse::getPosition(*window).x << "\n";
+			}
 			
 			}
-
+		
+			if (event.mouseButton.button == sf::Mouse::Right)
+			{
+				if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
+				{
+					tetramino.Rotate();
+				}
+			}
 		}
+
+
+
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
@@ -79,7 +85,7 @@ void GameEngine::update(sf::Time const& deltaTime)
 void GameEngine::draw()
 {
 	// Очистка графического окна
-	window->clear();
+	window->clear(sf::Color::Black);
 	// Отрисовка фона в графическом окне
 	tetramino.draw();
 	window->draw(background);
@@ -112,6 +118,7 @@ GameEngine::GameEngine()
 
 void GameEngine::run()
 {
+	
 	// Объявление переменной часы
 	sf::Clock clock;
 	// Цикл работает пока окно открыто
@@ -121,7 +128,7 @@ void GameEngine::run()
 		sf::Time dt = clock.restart();
 
 		input();
-
+		
 		update(dt);
 
 		draw();
