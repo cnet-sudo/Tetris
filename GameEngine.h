@@ -1,6 +1,4 @@
 #pragma once
-#include<iostream>
-#include"AssetManager.h"
 #include"Button.h";
 #include"string";
 #include"Tetramino.h";
@@ -34,6 +32,7 @@ private:
 	void draw();
 	bool myexit = false;
 	bool mypause = false;
+	bool mus = false;
 	sf::Time tm;
 };
 
