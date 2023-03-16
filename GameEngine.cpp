@@ -26,7 +26,8 @@ void GameEngine::input()
 				}
 			if (sound.checkClick(sf::Mouse::getPosition(*window),true))
 			{
-
+				if (mus) mus = false; else mus = true;
+				tetramino.mustet(mus);
 			}
 			if (restart.checkClick(sf::Mouse::getPosition(*window),true))
 			{
@@ -118,7 +119,7 @@ GameEngine::GameEngine()
 	if (!icon.loadFromFile("image/game.png")) window->close();
 	window->setIcon(256, 256, icon.getPixelsPtr());
 	text.setFont(AssetManager::GetFont("Godzilla.ttf"));
-	text.setFillColor(sf::Color::Black);
+	text.setFillColor(sf::Color::Green);
 	
 }
 

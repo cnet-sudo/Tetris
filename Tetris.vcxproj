@@ -138,6 +138,7 @@
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tetramino.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameSound.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Tetramino.h" />
   </ItemGroup>

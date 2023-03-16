@@ -1,6 +1,4 @@
 #pragma once
-#include<iostream>
-#include"AssetManager.h"
 #include"Button.h";
 #include"string";
 #include"Tetramino.h";
@@ -25,7 +23,7 @@ private:
 	Button sound = Button(sf::Vector2f(13, 300), AssetManager::GetTexture("image/nosound.png"), AssetManager::GetTexture("image/sound.png"));
 	Button exit = Button(sf::Vector2f(13, 380), AssetManager::GetTexture("image/exit1.png"), AssetManager::GetTexture("image/exit2.png"));
 	sf::Text text;
-	Tetramino tetramino = Tetramino(*window,sf::Vector2f(390,-30),Tetramino::Borders(198,609,585));
+	Tetramino tetramino = Tetramino(*window,sf::Vector2f(390,-35),Tetramino::Borders(198,609,585));
 	// Метод обработки событий 
 	void input();
 	// Метод обновления переменных, свойств и методов 
@@ -34,6 +32,7 @@ private:
 	void draw();
 	bool myexit = false;
 	bool mypause = false;
+	bool mus = false;
 	sf::Time tm;
 };
 
