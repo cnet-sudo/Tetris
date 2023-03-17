@@ -65,19 +65,19 @@ private:
 
 	sf::RenderWindow& window;    // графическое окно
 	
-	const sf::Vector2f tet;     // начальные координаты тетрамино
+	const sf::Vector2f tet;      // начальные координаты тетрамино
 	
 	
-	sf::Time frameRate;  // интервал обновления игровой логики
-	Borders bordes;      // границы перемещения тетрамино
-	sf::Vector2i TN;	 // тип тетрамино
-	sf::Vector2i Col;    // цвет
-	void newFigrois();	 // новый тетрамино
-	void LineDead(int g);	 // уничтожение полоски
-	bool check(ch ch);	 // проверка положения тетрамино
-	sf::Int32 Delay = 200;  // интервал обработки игровой логики
-	float click_dx;            // шаг перемещения тетрамино по x 
-	const float click_dy=1.0f; // шаг перемещения тетрамино по y
+	sf::Time frameRate;          // интервал обновления игровой логики
+	Borders bordes;              // границы перемещения тетрамино
+	sf::Vector2i TN;	         // тип тетрамино
+	sf::Vector2i Col;            // цвет
+	void newFigrois();	         // новый тетрамино
+	void LineDead(int g);	     // уничтожение полоски
+	bool check(ch ch);	         // проверка положения тетрамино
+	sf::Int32 Delay = 300;       // интервал обработки игровой логики
+	float click_dx;              // шаг перемещения тетрамино по x 
+	const float click_dy=1.0f;   // шаг перемещения тетрамино по y
 	int Score;
 
 	bool PlayMus = false;

@@ -48,7 +48,7 @@ bool Tetramino::check(ch ch)
 
 void Tetramino::Speed()
 {
-	Delay = 50;
+	Delay = 30;
 }
 
 void Tetramino::Restart()
@@ -88,6 +88,7 @@ void Tetramino::newFigrois()
 	}
    TN.y = d(rnd); // задаем тип тетрамино
    Col.y = d(rnd);
+   Delay = 300;
 }
 
 void Tetramino::update(sf::Time const& deltaTime)
@@ -129,7 +130,8 @@ void Tetramino::update(sf::Time const& deltaTime)
 			    {	
 					if (square[i][j] != sf::Color::Black) line++;
 					if (line == 20) 
-					{LineDead(j);
+					{
+					LineDead(j);
 					mus.play(1);
 					numLine++;
 					}
@@ -139,7 +141,6 @@ void Tetramino::update(sf::Time const& deltaTime)
 				{
 					Score += 5*(numLine * numLine);
 				}
-			if (Delay != 300) Delay = 300;
 			newFigrois();
 		}
 	}
@@ -167,7 +168,7 @@ void Tetramino::draw()
 			if (square[i][j] == sf::Color::Black) continue;
 			cube->setFillColor(square[i][j]);
 			cube->setPosition(static_cast<float>(i*20),static_cast<float>(j*20));
-			cube->move(210,25);
+			cube->move(210,0);
 			window.draw(*cube);
 		}
 	}
