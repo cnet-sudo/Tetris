@@ -167,7 +167,7 @@ void Tetramino::draw()
 			if (square[i][j] == sf::Color::Black) continue;
 			cube->setFillColor(square[i][j]);
 			cube->setPosition(static_cast<float>(i*20),static_cast<float>(j*20));
-			cube->move(210,25);
+			cube->move(210,0);
 			window.draw(*cube);
 		}
 	}
