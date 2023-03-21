@@ -25,7 +25,7 @@ bool Tetramino::check(ch ch)
 	}
 	break;
 	}
-	case Tetramino::ch::r:
+	case Tetramino::ch::rotation:
 	{
 		sf::Vector2f p = a[1]; 
 		for (int i = 0; i < 4; i++)
@@ -48,7 +48,7 @@ bool Tetramino::check(ch ch)
 
 void Tetramino::Speed()
 {
-	Delay = 30;
+	Delay = 10;
 }
 
 void Tetramino::Restart()
@@ -88,7 +88,7 @@ void Tetramino::newFigrois()
 	}
    TN.y = d(rnd); // задаем тип тетрамино
    Col.y = d(rnd);
-   Delay = 300;
+   Delay = 200;
 }
 
 void Tetramino::update(sf::Time const& deltaTime)
@@ -106,19 +106,12 @@ void Tetramino::update(sf::Time const& deltaTime)
 		if (check(ch::y)) { for (int i = 0; i < 4; i++)  a[i].y += click_dy;  }
 		else 
 		{   
-			
-
 			for (int i = 0; i < 4; i++)
 			{
 				if (static_cast<int>(a[i].y - 2) < 0) { Restart(); mus.play(2); return; }
 				
-				
-				size_t index1;
-				size_t index2;
-				
-				
-				index1 = static_cast<size_t>(a[i].x + 9);
-				index2 = static_cast<size_t>(a[i].y-2);
+				auto index1 = static_cast<size_t>(a[i].x + 9);
+				auto index2 = static_cast<size_t>(a[i].y-2);
 				
 				square[index1][index2] = sf::Color(tetcolor[Col.x]);
 			}
@@ -165,10 +158,9 @@ void Tetramino::draw()
 	{
 		for (int j = 0; j < Y; j++)
 		{
-			if (square[i][j] == sf::Color::Black) continue;
 			cube->setFillColor(square[i][j]);
 			cube->setPosition(static_cast<float>(i*20),static_cast<float>(j*20));
-			cube->move(210,0);
+			cube->move(210,20);
 			window.draw(*cube);
 		}
 	}
@@ -208,7 +200,7 @@ void Tetramino::LineDead(int g)
 
 void Tetramino::Rotate()
 {
-	if (check(ch::r)) 
+	if (check(ch::rotation))
 	{
 	sf::Vector2f p = a[1];
 	for (int i = 0; i < 4; i++) 
@@ -224,7 +216,7 @@ void Tetramino::Rotate()
 Tetramino::Tetramino(sf::RenderWindow& window, sf::Vector2f pos, Borders b)
 :window(window), tet(pos), bordes(b)
 {
-	cube->setOutlineColor(sf::Color::Black);
+	cube->setOutlineColor(sf::Color(78, 87, 84));
 	cube->setOutlineThickness(1);
 	Restart();
 }

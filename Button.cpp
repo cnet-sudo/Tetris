@@ -21,15 +21,21 @@ bool Button::checkClick(sf::Vector2i mousePos,bool position) {
         }
     
     }
-    else if (current) { setState(!current); return true; } 
+    else 
+        if (current) 
+        { 
+            setState(!current); return true; 
+        } 
 
     return false;
 }
 
 
 
-void Button::setState(bool which) {
+void Button::setState(bool which) 
+{
     current = which;
+    
     if (current) 
     {
         currentSpr = &clicked;
@@ -40,7 +46,8 @@ void Button::setState(bool which) {
    
 }
 
-sf::Sprite* Button::getSprite() {
+sf::Sprite* Button::getSprite() 
+{
     return currentSpr;
 }
 

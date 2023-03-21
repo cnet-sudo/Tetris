@@ -5,7 +5,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
-#include<cmath>
+//#include <cmath>
 
 
 class Tetramino
@@ -23,9 +23,9 @@ public:
 	};
 
     // список направления движения
-	enum class direction {left=-1,N,Right};
+	enum class direction {left=-1,NuLL,Right};
 	// списко проверки координат  
-	enum class ch {x,y,r};
+	enum class ch {x,y, rotation};
 
 	explicit Tetramino(sf::RenderWindow& window,sf::Vector2f, Borders);
 	// вектор движения тетрамино
@@ -75,7 +75,7 @@ private:
 	void newFigrois();	         // новый тетрамино
 	void LineDead(int g);	     // уничтожение полоски
 	bool check(ch ch);	         // проверка положения тетрамино
-	sf::Int32 Delay = 300;       // интервал обработки игровой логики
+	sf::Int32 Delay = 200;       // интервал обработки игровой логики
 	float click_dx;              // шаг перемещения тетрамино по x 
 	const float click_dy=1.0f;   // шаг перемещения тетрамино по y
 	int Score;
