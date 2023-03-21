@@ -5,7 +5,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
-#include<cmath>
+
 
 
 class Tetramino
@@ -23,9 +23,9 @@ public:
 	};
 
     // список направления движения
-	enum class direction {left=-1,N,Right};
+	enum class direction {left=-1,NuLL,Right};
 	// списко проверки координат  
-	enum class ch {x,y,r};
+	enum class ch {x,y, rotation};
 
 	explicit Tetramino(sf::RenderWindow& window,sf::Vector2f, Borders);
 	// вектор движения тетрамино
@@ -36,14 +36,20 @@ public:
 	void update(sf::Time const& deltaTime);
 	// вращение тетрамино
 	void Rotate();
+	// возвращает координаты центра тетрамино
 	sf::Vector2f getPositio();
+	// ускорение падения тетрамино
 	void Speed();
+	// рестарт игры
 	void Restart();
+	// возвращает выиграные очки
 	int getScore() const;
+	// включить выключить музыку
 	void mustet(bool m);
 private:
-	static const int Y = 31; // высота игрового поля
-	static const int X = 20; // ширина игрового поля
+	static const int Y = 31;       // высота игрового поля
+	static const int X = 20;       // ширина игрового поля
+    const float click_dy = 1.0f;;  // шаг перемещения тетрамино по y
 	// игровое поле
 	std::array<std::array<sf::Color, Y>, X> square;
 	// массив фигурок тетрамино
@@ -75,12 +81,12 @@ private:
 	void newFigrois();	         // новый тетрамино
 	void LineDead(int g);	     // уничтожение полоски
 	bool check(ch ch);	         // проверка положения тетрамино
-	sf::Int32 Delay = 300;       // интервал обработки игровой логики
+	sf::Int32 Delay;             // интервал обработки игровой логики
 	float click_dx;              // шаг перемещения тетрамино по x 
-	const float click_dy=1.0f;   // шаг перемещения тетрамино по y
-	int Score;
+	
+	int Score;                   // очки выиграша
 
-	bool PlayMus = false;
-	GameSound mus;
+	bool PlayMus = false;         // включение музыки
+	GameSound mus;				 // объект музыкальных эффектов
 };
 

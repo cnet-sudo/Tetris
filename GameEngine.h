@@ -23,7 +23,7 @@ private:
 	Button sound = Button(sf::Vector2f(13, 300), AssetManager::GetTexture("image/nosound.png"), AssetManager::GetTexture("image/sound.png"));
 	Button exit = Button(sf::Vector2f(13, 380), AssetManager::GetTexture("image/exit1.png"), AssetManager::GetTexture("image/exit2.png"));
 	sf::Text text;
-	Tetramino tetramino = Tetramino(*window,sf::Vector2f(390,-40),Tetramino::Borders(198,609,610));
+	Tetramino tetramino = Tetramino(*window,sf::Vector2f(390,-40),Tetramino::Borders(198,609,590));
 	// Метод обработки событий 
 	void input();
 	// Метод обновления переменных, свойств и методов 

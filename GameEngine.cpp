@@ -24,11 +24,13 @@ void GameEngine::input()
 				{
 				mypause = !mypause;
 				}
+
 			if (sound.checkClick(sf::Mouse::getPosition(*window),true))
 			{
 				if (mus) mus = false; else mus = true;
 				tetramino.mustet(mus);
 			}
+
 			if (restart.checkClick(sf::Mouse::getPosition(*window),true))
 			{
 				tetramino.Restart();
@@ -68,8 +70,8 @@ void GameEngine::input()
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{				
-				restart.checkClick(sf::Mouse::getPosition(*window), false);
-				exit.checkClick(sf::Mouse::getPosition(*window), false);
+				restart.checkClick();
+				exit.checkClick();
 			}
 			
 		}
