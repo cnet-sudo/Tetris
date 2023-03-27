@@ -10,6 +10,5 @@ int main()
         
     myGame->run();
 
-
     return 0;
 }

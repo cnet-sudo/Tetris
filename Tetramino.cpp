@@ -46,13 +46,13 @@ bool Tetramino::check(ch ch)
 }
 
 
-void Tetramino::Speed()
+void Tetramino::speed()
 {
 	mus.play(4);
-	Delay = 10;
+	delay = 10;
 }
 
-void Tetramino::Restart()
+void Tetramino::restart()
 {
 	for (int i = 0; i < X; i++)
 	{
@@ -61,42 +61,42 @@ void Tetramino::Restart()
 			square[i][j] = sf::Color::Black;
 		}
 	}
-	TN.y = d(rnd); // задаем будущий тип тетрамино
-	Col.y = d(rnd);
-	Score = 0;
+	tn.y = d(rnd); // задаем будущий тип тетрамино
+	col.y = d(rnd);
+	score = 0;
 	newFigrois();
 }
 
 void Tetramino::mustet(bool m)
 {
-	PlayMus = m;
+	playMus = m;
 }
 
-int Tetramino::getScore() const
+int Tetramino::getscore() const
 {
-	return Score;
+	return score;
 }
 
 void Tetramino::newFigrois()
 {
-	TN.x = TN.y;
-	Col.x = Col.y;
-	cube->setFillColor(tetcolor[Col.x]);
+	tn.x = tn.y;
+	col.x = col.y;
+	cube->setFillColor(tetcolor[col.x]);
 	for (int i = 0; i < 4; i++)
 	{
-		a[i].x = figures[TN.x][i] % 2;
-		a[i].y = static_cast<float>(figures[TN.x][i] / 2);
+		a[i].x = figures[tn.x][i] % 2;
+		a[i].y = static_cast<float>(figures[tn.x][i] / 2);
 	}
-   TN.y = d(rnd); // задаем тип тетрамино
-   Col.y = d(rnd);
-   Delay = 250;
+   tn.y = d(rnd); // задаем тип тетрамино
+   col.y = d(rnd);
+   delay = 250;
 }
 
 void Tetramino::update(sf::Time const& deltaTime)
 {
 	frameRate += deltaTime;
 	
-	if (frameRate > sf::milliseconds(Delay))
+	if (frameRate > sf::milliseconds(delay))
 	{
 		frameRate = sf::milliseconds(0);
 		
@@ -112,12 +112,12 @@ void Tetramino::update(sf::Time const& deltaTime)
 		{   
 			for (int i = 0; i < 4; i++)
 			{
-				if (static_cast<int>(a[i].y - 2) < 0) { Restart(); mus.play(2); return; }
+				if (static_cast<int>(a[i].y - 2) < 0) { restart(); mus.play(2); return; }
 				
 				auto index1 = static_cast<size_t>(a[i].x + 9);
 				auto index2 = static_cast<size_t>(a[i].y-2);
 				
-				square[index1][index2] = sf::Color(tetcolor[Col.x]);
+				square[index1][index2] = sf::Color(tetcolor[col.x]);
 			}
 			int numLine = 0;
 				for (int j = 0; j < 31; j++)
@@ -128,7 +128,7 @@ void Tetramino::update(sf::Time const& deltaTime)
 					if (square[i][j] != sf::Color::Black) line++;
 					if (line == 20) 
 					{
-					LineDead(j);
+					lineDead(j);
 					mus.play(1);
 					numLine++;
 					}
@@ -136,7 +136,7 @@ void Tetramino::update(sf::Time const& deltaTime)
 				}
 				if (numLine != 0) 
 				{
-					Score += 5*(numLine * numLine);
+					score += 5*(numLine * numLine);
 				}
 			newFigrois();
 		}
@@ -146,13 +146,13 @@ void Tetramino::update(sf::Time const& deltaTime)
 }
 void Tetramino::draw()
 {
-	if (PlayMus)  mus.play(0); else mus.stop(0);
+	if (playMus)  mus.play(0); else mus.stop(0);
 	
-	cube->setFillColor(tetcolor[Col.y]);
+	cube->setFillColor(tetcolor[col.y]);
 	for (int i = 0; i < 4; i++)
 	{	
 		// Устанавливаем позицию каждого кусочка тетрамино
-		cube->setPosition((figures[TN.y][i] % 2)*20, (static_cast<float>(figures[TN.y][i] / 2))*20);
+		cube->setPosition((figures[tn.y][i] % 2)*20, (static_cast<float>(figures[tn.y][i] / 2))*20);
 		cube->move(70,30);
 		// Отрисовка кубика
 		window.draw(*cube);	
@@ -162,6 +162,8 @@ void Tetramino::draw()
 	{
 		for (int j = 0; j < Y; j++)
 		{
+			//if (square[i][j] == sf::Color::Black) continue;
+			
 			cube->setFillColor(square[i][j]);
 			cube->setPosition(static_cast<float>(i*20),static_cast<float>(j*20));
 			cube->move(210,20);
@@ -169,7 +171,7 @@ void Tetramino::draw()
 		}
 	}
 
-	cube->setFillColor(tetcolor[Col.x]);
+	cube->setFillColor(tetcolor[col.x]);
 	for (int i = 0; i < 4; i++)
 	{   
 	    // Устанавливаем позицию каждого кусочка тетрамино
@@ -190,7 +192,7 @@ sf::Vector2f Tetramino::getPositio()
 
 
 
-void Tetramino::LineDead(int g) 
+void Tetramino::lineDead(int g) 
 {
 	for (int i = g; i > 0; i--)
 	{
@@ -202,7 +204,7 @@ void Tetramino::LineDead(int g)
 	}
 }
 
-void Tetramino::Rotate()
+void Tetramino::rotate()
 {
 	if (check(ch::rotation))
 	{
@@ -222,11 +224,12 @@ Tetramino::Tetramino(sf::RenderWindow& window, sf::Vector2f pos, Borders b)
 :window(window), tet(pos), bordes(b)
 {
 	cube->setOutlineColor(sf::Color(78, 87, 84));
+	//cube->setOutlineColor(sf::Color::Black);
 	cube->setOutlineThickness(1);
-	Restart();
+	restart();
 }
 
-void Tetramino::TetDirection(direction dir)
+void Tetramino::tetDirection(direction dir)
 {
 	click_dx =static_cast<float> (dir); 
 }

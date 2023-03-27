@@ -13,9 +13,10 @@ bool Button::checkClick(sf::Vector2i mousePos,bool position) {
     
     if (position) 
     {
-    if ((static_cast<float>(mousePos.x) > currentSpr->getPosition().x && static_cast<float>(mousePos.x) < (currentSpr->getPosition().x + currentSpr->getGlobalBounds().width))
-    
-        && (static_cast<float>(mousePos.y) > currentSpr->getPosition().y && static_cast<float>(mousePos.y) < (currentSpr->getPosition().y + currentSpr->getGlobalBounds().height)) )
+    if ((static_cast<float>(mousePos.x) > currentSpr->getPosition().x && static_cast<float>(mousePos.x) 
+        < (currentSpr->getPosition().x + currentSpr->getGlobalBounds().width))
+        && (static_cast<float>(mousePos.y) > currentSpr->getPosition().y && static_cast<float>(mousePos.y) 
+        < (currentSpr->getPosition().y + currentSpr->getGlobalBounds().height)) )
         {
         setState(!current); return true;
         }

@@ -11,7 +11,8 @@ public:
 	
 	GameSound()
 	{
-		std::array<std::string, n> namefilebuf{ "sound/fon.ogg" ,"sound/deadline.ogg","sound/game_over.ogg","sound/movetetramino.ogg","sound/svist.ogg"};
+		std::array<std::string, n> namefilebuf{ "sound/fon.ogg" ,"sound/deadline.ogg",
+		"sound/game_over.ogg","sound/movetetramino.ogg","sound/svist.ogg"};
 		
 		for (int i = 0; i < n; i++) {
 		GSound[i].setBuffer(AssetManager::GetSoundBuffer(namefilebuf[i]));

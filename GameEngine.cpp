@@ -1,21 +1,48 @@
 #include "GameEngine.h"
 
+GameEngine::GameEngine()
+{
+	background.setTexture(&AssetManager::GetTexture("image/Tetris.png"));
+	if (!icon.loadFromFile("image/game.png")) window->close();
+	window->setIcon(256, 256, icon.getPixelsPtr());
+	text.setFont(AssetManager::GetFont("Godzilla.ttf"));
+	text.setFillColor(sf::Color::Green);
+}
+
 void GameEngine::input()
 {
 	sf::Event event;
 
 	while (window->pollEvent(event))  
 	{
-		// Обработка события нажатия на клавишу Esc
-		if  (event.type == sf::Event::Closed) 	window->close(); 
 		
+		if  (event.type == sf::Event::Closed) 	window->close(); 
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			tetramino.tetDirection(Tetramino::direction::left);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			tetramino.tetDirection(Tetramino::direction::Right);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			tetramino.speed();
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			tetramino.rotate();
+		}
+				
 		if (event.type == sf::Event::MouseWheelMoved) 
 		{
 			if ((event.mouseWheel.delta == -1) || (event.mouseWheel.delta == 1))
 			{
-				tetramino.Speed();
+				tetramino.speed();
 			}
 		}
+
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
@@ -33,7 +60,7 @@ void GameEngine::input()
 
 			if (restart.checkClick(sf::Mouse::getPosition(*window),true))
 			{
-				tetramino.Restart();
+				tetramino.restart();
 			}
 			
 			if (exit.checkClick(sf::Mouse::getPosition(*window), true))
@@ -41,17 +68,17 @@ void GameEngine::input()
 				myexit = true;
 			}
 			
-			if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x) &&(sf::Mouse::getPosition(*window).x>208) && (sf::Mouse::getPosition(*window).x < 609))
+			if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x) 
+				&&(sf::Mouse::getPosition(*window).x>208) && (sf::Mouse::getPosition(*window).x < 609))
 			{
-				tetramino.TetDirection(Tetramino::direction::left);		
+				tetramino.tetDirection(Tetramino::direction::left);		
 			}
 			
-			if (sf::Mouse::getPosition(*window).x >= tetramino.getPositio().x && sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
+			if (sf::Mouse::getPosition(*window).x >= tetramino.getPositio().x 
+				&& sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
 			{
-			tetramino.TetDirection(Tetramino::direction::Right);
-			
+			tetramino.tetDirection(Tetramino::direction::Right);
 			}
-			
 			}
 		
 
@@ -59,12 +86,10 @@ void GameEngine::input()
 			{
 				if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
 				{
-					tetramino.Rotate();
+					tetramino.rotate();
 				}
 			}
 		}
-
-
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
@@ -97,7 +122,7 @@ void GameEngine::draw()
 {
 	// Очистка графического окна
 	window->clear(sf::Color::Black);
-	// Отрисовка фона в графическом окне
+	// Отрисовка объектов в графическом окне
 	tetramino.draw();
 	window->draw(background);
 	window->draw(*pause.getSprite());
@@ -105,37 +130,23 @@ void GameEngine::draw()
 	window->draw(*sound.getSprite());
 	window->draw(*exit.getSprite());
 	text.setPosition(15, 515);
-	text.setString(" < Score > ");
+	text.setString(" < score > ");
 	window->draw(text);
-    text.setString(std::to_string(tetramino.getScore()));
+    text.setString(std::to_string(tetramino.getscore()));
 	text.setPosition(100-text.getGlobalBounds().width/2, 555);
 	window->draw(text);
 	// Вывод объектов в графическом окне
 	window->display();
 }
 
-GameEngine::GameEngine()
-{
-	// Получение ссылки на текстуру для прямоугольника 
-	background.setTexture(&AssetManager::GetTexture("image/Tetris.png"));
-	if (!icon.loadFromFile("image/game.png")) window->close();
-	window->setIcon(256, 256, icon.getPixelsPtr());
-	text.setFont(AssetManager::GetFont("Godzilla.ttf"));
-	text.setFillColor(sf::Color::Green);
-	
-}
-
 void GameEngine::run()
 {
-	
-	// Объявление переменной часы
 	sf::Clock clock;
-	// Цикл работает пока окно открыто
+	
 	while (window->isOpen())
 	{
-		// Текущее время присваиваем переменной времени dt
 		sf::Time dt = clock.restart();
-
+		
 		input();
 		
 		update(dt);
@@ -143,3 +154,5 @@ void GameEngine::run()
 		draw();
 	}
 }
+
+

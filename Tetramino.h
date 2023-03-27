@@ -6,8 +6,6 @@
 #include <chrono>
 #include <random>
 
-
-
 class Tetramino
 {
 public:
@@ -29,21 +27,21 @@ public:
 
 	explicit Tetramino(sf::RenderWindow& window,sf::Vector2f, Borders);
 	// вектор движения тетрамино
-	void TetDirection(direction dir);
+	void tetDirection(direction dir);
 	// отрисовка тетрамино
 	void draw();
 	// обновление игровой логики тетрамино
 	void update(sf::Time const& deltaTime);
 	// вращение тетрамино
-	void Rotate();
+	void rotate();
 	// возвращает координаты центра тетрамино
 	sf::Vector2f getPositio();
 	// ускорение падения тетрамино
-	void Speed();
+	void speed();
 	// рестарт игры
-	void Restart();
+	void restart();
 	// возвращает выиграные очки
-	int getScore() const;
+	int getscore() const;
 	// включить выключить музыку
 	void mustet(bool m);
 private:
@@ -76,17 +74,17 @@ private:
 	
 	sf::Time frameRate;          // интервал обновления игровой логики
 	Borders bordes;              // границы перемещения тетрамино
-	sf::Vector2i TN;	         // тип тетрамино
-	sf::Vector2i Col;            // цвет
+	sf::Vector2i tn;	         // тип тетрамино
+	sf::Vector2i col;            // цвет
 	void newFigrois();	         // новый тетрамино
-	void LineDead(int g);	     // уничтожение полоски
+	void lineDead(int g);	     // уничтожение полоски
 	bool check(ch ch);	         // проверка положения тетрамино
-	sf::Int32 Delay;             // интервал обработки игровой логики
+	sf::Int32 delay;             // интервал обработки игровой логики
 	float click_dx;              // шаг перемещения тетрамино по x 
 	
-	int Score;                   // очки выиграша
+	int score;                   // очки выиграша
 
-	bool PlayMus = false;         // включение музыки
+	bool playMus = false;         // включение музыки
 	GameSound mus;				 // объект музыкальных эффектов
 };
 
