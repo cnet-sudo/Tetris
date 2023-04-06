@@ -1,3 +1,5 @@
+
+
 #include "GameSound.h"
 
 void GameSound::play(int index) 
@@ -14,3 +16,11 @@ void GameSound::AllStop()
 {
 	for (int i = 0; i < n; i++) if (GSound[i].getStatus() == sf::SoundSource::Status::Playing) GSound[i].stop();
 }
+
+
+
+
+
+
+
+
