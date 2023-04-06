@@ -5,100 +5,68 @@ GameEngine::GameEngine()
 	background.setTexture(&AssetManager::GetTexture("image/Tetris.png"));
 	if (!icon.loadFromFile("image/game.png")) window->close();
 	window->setIcon(256, 256, icon.getPixelsPtr());
-	text.setFont(AssetManager::GetFont("Godzilla.ttf"));
+	text.setFont(AssetManager::GetFont("font/Godzilla.ttf"));
 	text.setFillColor(sf::Color::Green);
+	tetramino.maket(sf::Vector2f(70,20));
 }
 
 void GameEngine::input()
 {
 	sf::Event event;
-
-	while (window->pollEvent(event))  
+	while (window->pollEvent(event))
 	{
-		
-		if  (event.type == sf::Event::Closed) 	window->close(); 
-
+		if (event.type == sf::Event::Closed) window->close();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			tetramino.tetDirection(Tetramino::direction::left);
-		}
+		{tetramino.tetDirection(Tetramino::direction::left);}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			tetramino.tetDirection(Tetramino::direction::Right);
-		}
+		{tetramino.tetDirection(Tetramino::direction::right);}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			tetramino.speed();
-		}
+		{tetramino.speed();	}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			tetramino.rotate();
-		}
-				
-		if (event.type == sf::Event::MouseWheelMoved) 
+		{tetramino.rotate();}
+		if (event.type == sf::Event::MouseWheelMoved)
 		{
 			if ((event.mouseWheel.delta == -1) || (event.mouseWheel.delta == 1))
 			{
 				tetramino.speed();
 			}
 		}
-
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-			if (pause.checkClick(sf::Mouse::getPosition(*window),true))
-				{
-				mypause = !mypause;
-				}
-
-			if (sound.checkClick(sf::Mouse::getPosition(*window),true))
-			{
-				if (mus) mus = false; else mus = true;
-				tetramino.mustet(mus);
-			}
-
-			if (restart.checkClick(sf::Mouse::getPosition(*window),true))
-			{
-				tetramino.restart();
-			}
-			
-			if (exit.checkClick(sf::Mouse::getPosition(*window), true))
-			{
-				myexit = true;
+				if (pause.checkClick(sf::Mouse::getPosition(*window), true))
+				{   mypause = !mypause;}
+				if (sound.checkClick(sf::Mouse::getPosition(*window), true))
+				{   if (mus) mus = false; else mus = true;
+					tetramino.mustet(mus);}
+				if (restart.checkClick(sf::Mouse::getPosition(*window), true))
+				{	tetramino.restart();}
+				if (exit.checkClick(sf::Mouse::getPosition(*window), true))
+				{	myexit = true;		}
+				if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x)
+					&& (sf::Mouse::getPosition(*window).x > 208) && (sf::Mouse::getPosition(*window).x < 609))
+				{	tetramino.tetDirection(Tetramino::direction::left);	}
+				if (sf::Mouse::getPosition(*window).x >= tetramino.getPositio().x
+					&& sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
+				{	tetramino.tetDirection(Tetramino::direction::right);}
 			}
 			
-			if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x) 
-				&&(sf::Mouse::getPosition(*window).x>208) && (sf::Mouse::getPosition(*window).x < 609))
-			{
-				tetramino.tetDirection(Tetramino::direction::left);		
-			}
-			
-			if (sf::Mouse::getPosition(*window).x >= tetramino.getPositio().x 
-				&& sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
-			{
-			tetramino.tetDirection(Tetramino::direction::Right);
-			}
-			}
-		
-
 			if (event.mouseButton.button == sf::Mouse::Right)
 			{
 				if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
-				{
-					tetramino.rotate();
-				}
+				{tetramino.rotate();}
 			}
 		}
 
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
-			{				
+			{
 				restart.checkClick();
 				exit.checkClick();
 			}
-			
+
 		}
 	}
 
@@ -106,23 +74,20 @@ void GameEngine::input()
 
 void GameEngine::update(sf::Time const& deltaTime)
 {
-	
 	if (!mypause) tetramino.update(deltaTime);
-	
+
 	if (myexit) {
-	tm += deltaTime;
-	if (tm > sf::seconds(1))
-	{
-		if (myexit) window->close();
-	}
+		tm += deltaTime;
+		if (tm > sf::seconds(1))
+		{
+			if (myexit) window->close();
+		}
 	}
 }
 
 void GameEngine::draw()
 {
-	// Очистка графического окна
 	window->clear(sf::Color::Black);
-	// Отрисовка объектов в графическом окне
 	tetramino.draw();
 	window->draw(background);
 	window->draw(*pause.getSprite());
@@ -132,23 +97,22 @@ void GameEngine::draw()
 	text.setPosition(15, 515);
 	text.setString(" < score > ");
 	window->draw(text);
-    text.setString(std::to_string(tetramino.getscore()));
-	text.setPosition(100-text.getGlobalBounds().width/2, 555);
+	text.setString(std::to_string(tetramino.getscore()));
+	text.setPosition(100 - text.getGlobalBounds().width / 2, 555);
 	window->draw(text);
-	// Вывод объектов в графическом окне
 	window->display();
 }
 
 void GameEngine::run()
 {
 	sf::Clock clock;
-	
+
 	while (window->isOpen())
 	{
 		sf::Time dt = clock.restart();
-		
+
 		input();
-		
+
 		update(dt);
 
 		draw();

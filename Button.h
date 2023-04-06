@@ -12,10 +12,15 @@ public:
     sf::Sprite* getSprite();
     
 private:
+
     sf::Sprite normal;
+
     sf::Sprite clicked;
+
     sf::Sprite* currentSpr;
-    bool current=false; // Переключение кнопок
+
+    bool current=false; 
+
     void setState(bool);
     
 };
