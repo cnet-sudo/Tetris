@@ -56,7 +56,6 @@ void Tetramino::update(sf::Time const& deltaTime)
 		{
 			for (int i = 0; i < 4; i++) t[i].x += click_dx; mus.play(3); click_dx = 0;
 		}
-		
 		if (check(ch::y)) { for (int i = 0; i < 4; i++)  t[i].y += click_dy; }
 		else 
 		{   
@@ -133,15 +132,14 @@ bool Tetramino::check(ch ch)
 	{	case Tetramino::ch::x:
 			{	for (int i = 0; i < 4; i++)
 				{if ((t[i].x + click_dx < 0) || 
-				(t[i].x + click_dx >width-1)) return false;	
-						
-			if ((static_cast<int>(t[i].y) >= 0) && 
+				(t[i].x + click_dx >static_cast<float>(width-1))) return false;	
+				if ((static_cast<int>(t[i].y) >= 0) && 
 				(square[static_cast<size_t>(t[i].x + click_dx)][static_cast<size_t>(t[i].y)]
 				!= sf::Color::Black))  return false;}
     	break;}
 		case Tetramino::ch::y:
 	        {	for (int i = 0; i < 4; i++)
-				{if ((t[i].y+ click_dy) > height-1)  return false;
+				{if ((t[i].y+ click_dy) > static_cast<float>(height-1))  return false;
 				if ((static_cast<int>(t[i].y + click_dy) >= 0) && 
 				(square[static_cast<size_t>(t[i].x )][static_cast<size_t>(t[i].y + click_dy)] 
 				!= sf::Color::Black))  return false;}
@@ -152,12 +150,12 @@ bool Tetramino::check(ch ch)
 				{
 				float x = t[i].y - p.y; 
 				float y = t[i].x - p.x; 
-			    if (((p.x - x)<0) || ((p.x - x)  >width-1) || 
-				((p.y + y)>height-1) ) return false;
-				
+			    if (((p.x - x)<0) || ((p.x - x)  > static_cast<float>(width-1)) ||
+				((p.y + y)> static_cast<float>(height-1))) return false;
 				if ((static_cast<int>(p.y + y) >= 0) && 
 				(square[static_cast<size_t>(p.x - x)][static_cast<size_t>(p.y + y)] 
-				!= sf::Color::Black))  return false;}
+				!= sf::Color::Black))  return false;
+				}
 		break;}
 	default:
 		break;
@@ -188,7 +186,6 @@ void Tetramino::draw()
 			window.draw(*cube);
 		}
 	}
-
 	cube->setFillColor(tetcolor[colTet.x]);
 	for (int i = 0; i < 4; i++)
 	{   

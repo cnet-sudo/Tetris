@@ -35,14 +35,16 @@ void GameEngine::input()
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				if (pause.checkClick(sf::Mouse::getPosition(*window), true))
+				if (pause.checkClick(sf::Mouse::getPosition(*window)))
 				{   mypause = !mypause;}
-				if (sound.checkClick(sf::Mouse::getPosition(*window), true))
-				{   if (mus) mus = false; else mus = true;
-					tetramino.mustet(mus);}
-				if (restart.checkClick(sf::Mouse::getPosition(*window), true))
+				if (sound.checkClick(sf::Mouse::getPosition(*window)))
+				{   
+					if (mus) mus = false; else mus = true;
+					tetramino.mustet(mus);
+				}
+				if (restart.checkClick(sf::Mouse::getPosition(*window)))
 				{	tetramino.restart();}
-				if (exit.checkClick(sf::Mouse::getPosition(*window), true))
+				if (exit.checkClick(sf::Mouse::getPosition(*window)))
 				{	myexit = true;		}
 				if ((sf::Mouse::getPosition(*window).x < tetramino.getPositio().x)
 					&& (sf::Mouse::getPosition(*window).x > 208) && (sf::Mouse::getPosition(*window).x < 609))
@@ -51,14 +53,12 @@ void GameEngine::input()
 					&& sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
 				{	tetramino.tetDirection(Tetramino::direction::right);}
 			}
-			
 			if (event.mouseButton.button == sf::Mouse::Right)
 			{
 				if (sf::Mouse::getPosition(*window).x > 208 && sf::Mouse::getPosition(*window).x < 609)
 				{tetramino.rotate();}
 			}
 		}
-
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
@@ -84,7 +84,6 @@ void GameEngine::update(sf::Time const& deltaTime)
 		}
 	}
 }
-
 void GameEngine::draw()
 {
 	window->clear(sf::Color::Black);
@@ -102,7 +101,6 @@ void GameEngine::draw()
 	window->draw(text);
 	window->display();
 }
-
 void GameEngine::run()
 {
 	sf::Clock clock;
@@ -110,11 +108,8 @@ void GameEngine::run()
 	while (window->isOpen())
 	{
 		sf::Time dt = clock.restart();
-
 		input();
-
 		update(dt);
-
 		draw();
 	}
 }

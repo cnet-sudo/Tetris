@@ -37,9 +37,10 @@ public:
 	void mustet(bool);
 	// метод отображения макета следующего тетрамино
 	void maket(sf::Vector2f);
+
 private:
-	const int height;   // высота игрового поля
-	const int width;    // ширина игрового поля
+	const int height;               // высота игрового поля
+	const int width;                // ширина игрового поля
 	const  float click_dy = 1.0f;   // шаг перемещения тетрамино по y
 	// массив игрового поля
 	std::vector<std::vector<sf::Color>> square;
