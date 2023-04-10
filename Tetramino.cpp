@@ -47,7 +47,8 @@ void Tetramino::newFigrois()
 }
 
 void Tetramino::update(sf::Time const& deltaTime)
-{
+{	
+	if (playMus)  mus.play(0); else mus.stop(0);
 	frameRate += deltaTime;
 	if (frameRate > sf::milliseconds(delay))
 	{
@@ -97,13 +98,13 @@ void Tetramino::rotate()
 {
 	if (check(ch::rotation))
 	{
-	sf::Vector2f p = t[1];
+	sf::Vector2f centerRotation = t[1];
 	for (int i = 0; i < 4; i++) 
 	{
-		float x = t[i].y - p.y;
-		float y = t[i].x - p.x;
-		t[i].x = p.x - x;
-		t[i].y = p.y + y;
+		float x = t[i].y - centerRotation.y;
+		float y = t[i].x - centerRotation.x;
+		t[i].x = centerRotation.x - x;
+		t[i].y = centerRotation.y + y;
 	}
 	mus.play(3);
 	}
@@ -145,15 +146,15 @@ bool Tetramino::check(ch ch)
 				!= sf::Color::Black))  return false;}
 		break;}
 		case Tetramino::ch::rotation:
-			{ sf::Vector2f p = t[1]; 
+			{ sf::Vector2f centerRotation = t[1];
 				for (int i = 0; i < 4; i++)
 				{
-				float x = t[i].y - p.y; 
-				float y = t[i].x - p.x; 
-			    if (((p.x - x)<0) || ((p.x - x)  > static_cast<float>(width-1)) ||
-				((p.y + y)> static_cast<float>(height-1))) return false;
-				if ((static_cast<int>(p.y + y) >= 0) && 
-				(square[static_cast<size_t>(p.x - x)][static_cast<size_t>(p.y + y)] 
+				float x = t[i].y - centerRotation.y;
+				float y = t[i].x - centerRotation.x;
+			    if (((centerRotation.x - x)<0) || ((centerRotation.x - x)  > static_cast<float>(width-1)) ||
+				((centerRotation.y + y)> static_cast<float>(height-1))) return false;
+				if ((static_cast<int>(centerRotation.y + y) >= 0) &&
+				(square[static_cast<size_t>(centerRotation.x - x)][static_cast<size_t>(centerRotation.y + y)]
 				!= sf::Color::Black))  return false;
 				}
 		break;}
@@ -165,8 +166,7 @@ bool Tetramino::check(ch ch)
 
 void Tetramino::draw()
 {
-	if (playMus)  mus.play(0); else mus.stop(0);
-	if (positionmaket.x > 0) 
+	if (positionmaket.x >= 0) 
 	{
 	cube->setFillColor(tetcolor[colTet.y]);
 	for (int i = 0; i < 4; i++)

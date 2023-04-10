@@ -13,7 +13,7 @@ Button::Button(sf::Vector2f location, const sf::Texture& normal,
 
 bool Button::checkClick(sf::Vector2i mousePos) 
 {
-    if (mousePos.x)
+    if (mousePos.x>=0)
     {
     if ((static_cast<float>(mousePos.x) > currentSpr->getPosition().x && 
         static_cast<float>(mousePos.x) < (currentSpr->getPosition().x + 
@@ -33,8 +33,6 @@ bool Button::checkClick(sf::Vector2i mousePos)
     return false;
 }
 
-
-
 void Button::setState(bool which) 
 {
     current = which;
@@ -52,4 +50,11 @@ sf::Sprite* Button::getSprite()
 {
     return currentSpr;
 }
+
+
+
+
+
+
+
 

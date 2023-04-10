@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include"AssetManager.h"
 #include "GameSound.h"
 #include <array>
@@ -10,73 +10,98 @@
 class Tetramino
 {
 public:
-	// перечисление направлений движения тетрамино по горизонтали
+	// РїРµСЂРµС‡РёСЃР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёР№ РґРІРёР¶РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
+	// enumeration of directions of movement of Tetrimino horizontally
 	enum class direction { left = -1, nuLL, right };
-	// перечисление проверки координат на столкновение с установлеными границами 
-	// при перемещении и вращении
+	// РїРµСЂРµС‡РёСЃР»РµРЅРёРµ РїСЂРѕРІРµСЂРєРё РєРѕРѕСЂРґРёРЅР°С‚ РЅР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹РјРё РіСЂР°РЅРёС†Р°РјРё 
+	// РїСЂРё РїРµСЂРµРјРµС‰РµРЅРёРё Рё РІСЂР°С‰РµРЅРёРё
+	// enumeration of checking coordinates for collision with set boundaries
+    // when moving and rotating
 	enum class ch { x, y, rotation };
-	// конструктор тетрамино
+	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ С‚РµС‚СЂР°РјРёРЅРѕ
+	// Tetrimino constructor
 	explicit Tetramino(sf::RenderWindow&, sf::Vector2f, sf::Vector2i, float);
-	// метод устанавливающий вектор движения тетрамино
+	// РјРµС‚РѕРґ СѓСЃС‚Р°РЅР°РІР»РёРІР°СЋС‰РёР№ РІРµРєС‚РѕСЂ РґРІРёР¶РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ
+	// method that sets the tetramino's motion vector
 	void tetDirection(direction);
-	// метод рисующий тетрамино в графическом окне
+	// РјРµС‚РѕРґ СЂРёСЃСѓСЋС‰РёР№ С‚РµС‚СЂР°РјРёРЅРѕ РІ РіСЂР°С„РёС‡РµСЃРєРѕРј РѕРєРЅРµ
+	// method that draws tetraminos in the graphics window
 	void draw();
-	// метод обновления игровой логики тетрамино
+	// РјРµС‚РѕРґ РѕР±РЅРѕРІР»РµРЅРёСЏ РёРіСЂРѕРІРѕР№ Р»РѕРіРёРєРё С‚РµС‚СЂР°РјРёРЅРѕ
+	// method for updating game logic Tetrimino
 	void update(sf::Time const&);
-	// метод вращения тетрамино
+	// РјРµС‚РѕРґ РІСЂР°С‰РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ
+	// tetramino rotation method
 	void rotate();
-	// метод возвращающий координаты центра тетрамино
+	// РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РєРѕРѕСЂРґРёРЅР°С‚С‹ С†РµРЅС‚СЂР° С‚РµС‚СЂР°РјРёРЅРѕ
+	// method returning tetramino center coordinates
 	sf::Vector2f getPositio();
-	// метод ускоряющий падение тетрамино
+	// РјРµС‚РѕРґ СѓСЃРєРѕСЂСЏСЋС‰РёР№ РїР°РґРµРЅРёРµ С‚РµС‚СЂР°РјРёРЅРѕ
+	// method to accelerate the fall of tetraminos
 	void speed();
-	// метод сбрасывающий все свойства в начальные значения - рестарт игры
+	// РјРµС‚РѕРґ СЃР±СЂР°СЃС‹РІР°СЋС‰РёР№ РІСЃРµ СЃРІРѕР№СЃС‚РІР° РІ РЅР°С‡Р°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ - СЂРµСЃС‚Р°СЂС‚ РёРіСЂС‹
+	// method resetting all properties to initial values вЂ‹вЂ‹- game restart
 	void restart();
-	// метод возвращающий количество выигранных очков
+	// РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹РёРіСЂР°РЅРЅС‹С… РѕС‡РєРѕРІ
+	// method returning the number of points won
 	int getscore() const;
-	// метод включающий и выключающий фоновую музыку
+	// РјРµС‚РѕРґ РІРєР»СЋС‡Р°СЋС‰РёР№ Рё РІС‹РєР»СЋС‡Р°СЋС‰РёР№ С„РѕРЅРѕРІСѓСЋ РјСѓР·С‹РєСѓ
+	// method to enable and disable background music
 	void mustet(bool);
-	// метод отображения макета следующего тетрамино
+	// РјРµС‚РѕРґ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РјР°РєРµС‚Р° СЃР»РµРґСѓСЋС‰РµРіРѕ С‚РµС‚СЂР°РјРёРЅРѕ
+	// method for displaying the layout of the next Tetrimino
 	void maket(sf::Vector2f);
 
 private:
-	const int height;               // высота игрового поля
-	const int width;                // ширина игрового поля
-	const  float click_dy = 1.0f;   // шаг перемещения тетрамино по y
-	// массив игрового поля
+	const int height;               // РІС‹СЃРѕС‚Р° РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ / height of the playing field
+	const int width;                // С€РёСЂРёРЅР° РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ / playing field width
+	const  float click_dy = 1.0f;   // С€Р°Рі РїРµСЂРµРјРµС‰РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ РїРѕ y  /  step of moving tetraminos in y
+	// РјР°СЃСЃРёРІ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
+	// playing field array
 	std::vector<std::vector<sf::Color>> square;
-	// массив локальных координат фигурок тетрамино 
+	// РјР°СЃСЃРёРІ Р»РѕРєР°Р»СЊРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚ С„РёРіСѓСЂРѕРє С‚РµС‚СЂР°РјРёРЅРѕ 
+	// array of local coordinates of tetramino figures
 	std::array<std::array<int, 4>, 7> figures
 	{ {{1,3,5,7},{2,4,5,7},{3,4,5,6},{3,4,5,7},{2,3,5,7},{3,5,6,7},{2,3,4,5}} };
-	// положение прямоугольника в построении тетрамино 
+	// РїРѕР»РѕР¶РµРЅРёРµ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР° РІ РїРѕСЃС‚СЂРѕРµРЅРёРё С‚РµС‚СЂР°РјРёРЅРѕ 
+	// the position of the rectangle in the construction of tetraminos
 	std::array<sf::Vector2f, 4> t;
-	// массив цвета для тетрамино
+	// РјР°СЃСЃРёРІ С†РІРµС‚Р° РґР»СЏ С‚РµС‚СЂР°РјРёРЅРѕ
+	// color array for tetramino
 	std::array<sf::Color, 7> tetcolor{ {sf::Color::Blue,sf::Color::Cyan,sf::Color::Yellow,
 		sf::Color::Green,sf::Color::Magenta,sf::Color::Red,sf::Color::White} };
-	// прямоугольник тетрамино
+	// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє С‚РµС‚СЂР°РјРёРЅРѕ
+	// tetramino rectangle
 	std::unique_ptr<sf::RectangleShape> cube = std::make_unique<sf::RectangleShape>();
-	// момент системного времени
+	// РјРѕРјРµРЅС‚ СЃРёСЃС‚РµРјРЅРѕРіРѕ РІСЂРµРјРµРЅРё
+	// point of system time
 	long long seed = std::chrono::system_clock::now().time_since_epoch().count();
-	// запуск генератора случайных чисел
+	// Р·Р°РїСѓСЃРє РіРµРЅРµСЂР°С‚РѕСЂР° СЃР»СѓС‡Р°Р№РЅС‹С… С‡РёСЃРµР»
+	// start the random number generator
 	std::default_random_engine rnd = std::default_random_engine(static_cast<long>(seed));
-	// установка диапазона случайных чисел
+	// СѓСЃС‚Р°РЅРѕРІРєР° РґРёР°РїР°Р·РѕРЅР° СЃР»СѓС‡Р°Р№РЅС‹С… С‡РёСЃРµР»
+	// set the range of random numbers
 	std::uniform_int_distribution<int> d = std::uniform_int_distribution<int>(0, 6);
-	// ссылка на графическое окно
+	// СЃСЃС‹Р»РєР° РЅР° РіСЂР°С„РёС‡РµСЃРєРѕРµ РѕРєРЅРѕ
+	// link to the graphics window
 	sf::RenderWindow& window;
-	// начальные координаты тетрамино
+	// РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РµС‚СЂР°РјРёРЅРѕ
+	// initial coordinates of tetramino
 	const sf::Vector2f tet;
-	sf::Time frameRate;          // интервал обновления игровой логики
-	sf::Vector2i typeTet;	     // тип тетрамино
-	sf::Vector2i colTet;         // цвет тетрамино
-	void newFigrois();	         // новый тетрамино
-	void lineDead(int);	         // уничтожение полоски тетрамино при заполнении поля по горизонтали
-	bool check(ch);	             // проверка положения тетрамино
-	sf::Int32 delay;             // интервал обработки игровой логики
-	float click_dx;              // шаг перемещения тетрамино по x 
-	int score;                   // очки выигрыша
-	bool playMus = false;        // включение музыки
-	GameSound mus;				 // объект музыкальных эффектов
-	float scale;                 // масштаб тетрамино
-	// свойство координат макета тетрамино
+	sf::Time frameRate;          // РёРЅС‚РµСЂРІР°Р» РѕР±РЅРѕРІР»РµРЅРёСЏ РёРіСЂРѕРІРѕР№ Р»РѕРіРёРєРё / game logic update interval
+	sf::Vector2i typeTet;	     // С‚РёРї С‚РµС‚СЂР°РјРёРЅРѕ / tetramino type
+	sf::Vector2i colTet;         // С†РІРµС‚ С‚РµС‚СЂР°РјРёРЅРѕ / tetramino color
+	void newFigrois();	         // РЅРѕРІС‹Р№ С‚РµС‚СЂР°РјРёРЅРѕ  / new tetramino
+	void lineDead(int);	         // СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ РїРѕР»РѕСЃРєРё С‚РµС‚СЂР°РјРёРЅРѕ РїСЂРё Р·Р°РїРѕР»РЅРµРЅРёРё РїРѕР»СЏ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё / destruction of a strip of tetramino when filling the field horizontally
+	bool check(ch);	             // РїСЂРѕРІРµСЂРєР° РїРѕР»РѕР¶РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ / Tetrimino Position Check
+	sf::Int32 delay;             // РёРЅС‚РµСЂРІР°Р» РѕР±СЂР°Р±РѕС‚РєРё РёРіСЂРѕРІРѕР№ Р»РѕРіРёРєРё / game logic processing interval
+	float click_dx;              // С€Р°Рі РїРµСЂРµРјРµС‰РµРЅРёСЏ С‚РµС‚СЂР°РјРёРЅРѕ РїРѕ x  / move step of tetramino in x
+	int score;                   // РѕС‡РєРё РІС‹РёРіСЂС‹С€Р° / scoring points
+	bool playMus = false;        // РІРєР»СЋС‡РµРЅРёРµ РјСѓР·С‹РєРё / turning on the music
+	GameSound mus;				 // РѕР±СЉРµРєС‚ РјСѓР·С‹РєР°Р»СЊРЅС‹С… СЌС„С„РµРєС‚РѕРІ / music effects object
+	float scale;                 // РјР°СЃС€С‚Р°Р± С‚РµС‚СЂР°РјРёРЅРѕ / tetramino scale
+	// СЃРІРѕР№СЃС‚РІРѕ РєРѕРѕСЂРґРёРЅР°С‚ РјР°РєРµС‚Р° С‚РµС‚СЂР°РјРёРЅРѕ
+	// tetramino layout coordinates property
 	sf::Vector2f positionmaket= sf::Vector2f(-1, -1);
 };
 
