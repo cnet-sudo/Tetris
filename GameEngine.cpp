@@ -24,6 +24,7 @@ void GameEngine::input()
 		{tetramino.speed();	}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{tetramino.rotate();}
+
 		if (event.type == sf::Event::MouseWheelMoved)
 		{
 			if ((event.mouseWheel.delta == -1) || (event.mouseWheel.delta == 1))
@@ -67,10 +68,7 @@ void GameEngine::input()
 				exit.checkClick();
 			}
 
-		}
-	}
-
-}
+		}}}
 
 void GameEngine::update(sf::Time const& deltaTime)
 {

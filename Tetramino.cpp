@@ -36,14 +36,14 @@ void Tetramino::newFigrois()
 {
 	typeTet.x = typeTet.y;
 	colTet.x = colTet.y;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < t.size(); i++)
 	{
 		t[i].x = figures[typeTet.x][i] % 2+ static_cast<float>(floor(width/2));
 		t[i].y = static_cast<float>(figures[typeTet.x][i] / 2);
 	}
 	typeTet.y = d(rnd);
 	colTet.y = d(rnd);
-   delay = 250;
+    delay = 250;
 }
 
 void Tetramino::update(sf::Time const& deltaTime)
@@ -60,7 +60,7 @@ void Tetramino::update(sf::Time const& deltaTime)
 		if (check(ch::y)) { for (int i = 0; i < 4; i++)  t[i].y += click_dy; }
 		else 
 		{   
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < t.size(); i++)
 			{
 				if (static_cast<int>(t[i].y) == 2) { restart(); mus.play(2); return; }
 				square[static_cast<size_t>(t[i].x)][static_cast<size_t>(t[i].y)] = sf::Color(tetcolor[colTet.x]);
@@ -99,7 +99,7 @@ void Tetramino::rotate()
 	if (check(ch::rotation))
 	{
 	sf::Vector2f centerRotation = t[1];
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < t.size(); i++) 
 	{
 		float x = t[i].y - centerRotation.y;
 		float y = t[i].x - centerRotation.x;
@@ -131,7 +131,7 @@ bool Tetramino::check(ch ch)
 {
 	switch (ch)
 	{	case Tetramino::ch::x:
-			{	for (int i = 0; i < 4; i++)
+			{	for (int i = 0; i < t.size(); i++)
 				{if ((t[i].x + click_dx < 0) || 
 				(t[i].x + click_dx >static_cast<float>(width-1))) return false;	
 				if ((static_cast<int>(t[i].y) >= 0) && 
@@ -139,7 +139,7 @@ bool Tetramino::check(ch ch)
 				!= sf::Color::Black))  return false;}
     	break;}
 		case Tetramino::ch::y:
-	        {	for (int i = 0; i < 4; i++)
+	        {	for (int i = 0; i < t.size(); i++)
 				{if ((t[i].y+ click_dy) > static_cast<float>(height-1))  return false;
 				if ((static_cast<int>(t[i].y + click_dy) >= 0) && 
 				(square[static_cast<size_t>(t[i].x )][static_cast<size_t>(t[i].y + click_dy)] 
@@ -147,7 +147,7 @@ bool Tetramino::check(ch ch)
 		break;}
 		case Tetramino::ch::rotation:
 			{ sf::Vector2f centerRotation = t[1];
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < t.size(); i++)
 				{
 				float x = t[i].y - centerRotation.y;
 				float y = t[i].x - centerRotation.x;
@@ -187,7 +187,7 @@ void Tetramino::draw()
 		}
 	}
 	cube->setFillColor(tetcolor[colTet.x]);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < t.size(); i++)
 	{   
 	    cube->setPosition(t[i].x * scale, t[i].y * scale);
 		cube->move(tet);
